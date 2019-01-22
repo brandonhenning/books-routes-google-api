@@ -1,16 +1,26 @@
 const express = require('express')
 const app = express()
 const port = 3000 || process.env.PORT
+const fetch = require('node-fetch')
+const URL = 'https://www.googleapis.com/books/v1/volumes?q=origin'
+const db = require('./database/databaseFunctions')
 
+db.createTables()
 
 app.listen(port, () => {
     console.log(`Listening on ${port}`)
 })
 
-app.get('/', (request, response) => {
-    response.send('Thank you for reaching out.. Hi. Its me.')
-})
+async function callGoogle () {
+    try {
+        const response = await fetch(URL)
+        const prices = await response.json()
+        console.log(prices)
+    }
+    catch (error) { console.log('Error fetchin data from GOOGLE api', error) }
+}
 
-app.get('/stuff', (request, response) => {
-    response.send(`Here's some stuff!`)
-})
+
+setInterval(callGoogle, 2000) 
+
+
