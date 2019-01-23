@@ -22,6 +22,8 @@ async function callGoogle () {
     catch (error) { console.log('Error fetchin data from GOOGLE api', error) }
 }
 
+// testing git merges with jared
+
 
 setInterval(callGoogle, 2000) 
 
