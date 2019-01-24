@@ -1,10 +1,10 @@
 const pg = require('pg')
 
 const pool = new pg.Pool({
-    user: 'brandonhenning',
+    user: 'jaredhenning',
     host: '127.0.0.1',
-    database: 'books-practice',
-    password: '',
+    database: 'bookspractice',
+    password: 'mypass',
     port: '5432'
 })
 

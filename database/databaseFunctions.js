@@ -22,9 +22,18 @@ async function authenticateUser (email, password) {
     } catch (error) {log('Error authenticating user from database', error)}
 }
 
+async function updateEmail (email, password, newEmail) {
+    try {
+        const updatedUser = await pool.query(`UPDATE users SET email='${newEmail}' WHERE email='${email}' AND password='${password}'`)
+        if (updatedUser.rows.length > 0)
+            {return updatedUser.rows}
+    } catch (error) {log('Error updating user email from databasefunctions', error)}
+}
+
 module.exports = {
     createTables,
     createUser,
-    authenticateUser
+    authenticateUser,
+    updateEmail
 }
 
