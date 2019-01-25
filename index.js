@@ -36,9 +36,9 @@ app.get('/edit-email/:email/:password/:newEmail', async (request, response) => {
         const user = await checkUser(request.params.email, request.params.password)
         if(user) {
             await db.updateEmail(request.params.email, request.params.password, request.params.newEmail)
-
-            response.redirect(`/user-status/${request.params.newEmail}/${request.params.password}`)
         }
+
+        return response.redirect(`/user-status/${request.params.newEmail}/${request.params.password}`)
     } catch (error) {log('Error updating user email', error)}
 });
 
@@ -48,21 +48,21 @@ app.get('/edit-password/:email/:password/:newPassword', async (request, response
         const user = await checkUser(request.params.email, request.params.password)
         if(user) {
             await db.updatePassword(request.params.email, request.params.password, request.params.newPassword)
-            
-            response.redirect(`/user-status/${request.params.email}/${request.params.newPassword}`)
         }
+
+        response.redirect(`/user-status/${request.params.email}/${request.params.newPassword}`)
     } catch (error) {log('Error updating user password', error)}
 });
 
 // Route for user to delete their account
-app.get('/delete/:email/:password', async (request, response) => {
+app.get('/delete-user/:email/:password', async (request, response) => {
     try {
         const user = await checkUser(request.params.email, request.params.password)
         if (user) {
             await db.deleteUser(request.params.email, request.params.password)
-
-            response.redirect(`/user-status/${request.params.email}/${request.params.password}`)
         }
+
+        response.redirect(`/user-status/${request.params.email}/${request.params.password}`)
     } catch(error) {log('Error deleting user account', error)}
 })
 
@@ -78,7 +78,6 @@ app.get('/cid/:email/:password', async (request, response) => {
 
 app.get('/user-status/:email/:password', async (request, response) => {
     const user = await checkUser(request.params.email, request.params.password)
-    
     return response.json({ user })
 })
 

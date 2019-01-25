@@ -24,24 +24,22 @@ async function authenticateUser (email, password) {
 
 async function updateEmail (email, password, newEmail) {
     try {
-        const updatedUser = await pool.query(`UPDATE users SET email='${newEmail}' WHERE email='${email}' AND password='${password}'`)
-        if (updatedUser.rows.length > 0)
-            {return updatedUser.rows}
+        await pool.query(`UPDATE users SET email='${newEmail}' WHERE email='${email}' AND password='${password}'`)
+        log("Email successfully updated")
     } catch (error) {log('Error updating user email from databasefunctions', error)}
 }
 
 async function updatePassword (email, password, newPassword) {
     try {
-        const updatedUser = await pool.query(`UPDATE users SET password='${newPassword}' WHERE email='${email}' AND password='${password}'`)
-        if (updatedUser.rows.length > 0)
-            console.log(updatedUser)
-            {return updatedUser.rows}
+        await pool.query(`UPDATE users SET password='${newPassword}' WHERE email='${email}' AND password='${password}'`)
+        log("Password successfully updated")
     } catch (error) {log('Error updating user password from databasefunctions', error)}
 }
 
 async function deleteUser (email, password) {
     try {
         await pool.query(`DELETE FROM users WHERE email='${email}' AND password='${password}'`)
+        log("User account deleted")
     } catch (error) {log("Error deleting user account from databasefunctions", error)}
 }
 module.exports = {
