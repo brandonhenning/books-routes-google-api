@@ -42,6 +42,7 @@ async function deleteUser (email, password) {
         log("User account deleted")
     } catch (error) {log("Error deleting user account from databasefunctions", error)}
 }
+
 module.exports = {
     createTables,
     createUser,
