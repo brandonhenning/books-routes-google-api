@@ -19,6 +19,7 @@ async function authenticateUser (email, password) {
     try {
         const user = await pool.query(`SELECT email, password FROM users WHERE email='${email}' AND password='${password}'`)
         if (user.rows.length > 0)
+            log('user authenticated')
             {return user.rows}
     } catch (error) {log('Error authenticating user from database', error)}
 }

@@ -14,7 +14,7 @@ class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    // implement db.functions
+    this.props.sendLoginRequest(this.state.email, this.state.password);
   };
 
   render() {

@@ -4,18 +4,15 @@ import Login from "./Login";
 class App extends Component {
   state = { newUser: null };
 
-  // componentDidMount() {
-  //   let email = "justin";
-  //   let password = "beiber";
-
-  //   fetch(`/${email}/${password}`)
-  //     .then(result => {
-  //       console.log(result)
-  //     })
-  //     .then(result => {
-  //       console.log(result)
-  //     })
-  // }
+  sendLoginRequest = (email, password) => {
+    fetch(`/${email}/${password}`)
+    .then(result => {
+      console.log(result)
+    })
+    .then(result => {
+      console.log(result)
+    })
+  }
 
   render() {
     return (
@@ -29,7 +26,7 @@ class App extends Component {
             }}
             className="column"
           >
-            <Login />
+            <Login sendLoginRequest={this.sendLoginRequest} />
           </div>
         </div>
       </div>
