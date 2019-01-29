@@ -1,14 +1,17 @@
 const express = require('express')
 const app = express()
-const port = 3000 || process.env.PORT
+const port = 5000 || process.env.PORT
 const fetch = require('node-fetch')
 const URL = 'https://www.googleapis.com/books/v1/volumes?q=origin'
 const db = require('./database/databaseFunctions')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const path = require('path')
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 
 db.createTables()
 
@@ -79,6 +82,12 @@ app.get('/cid/:email/:password', async (request, response) => {
 app.get('/user-status/:email/:password', async (request, response) => {
     const user = await checkUser(request.params.email, request.params.password)
     return response.json({ user })
+})
+
+app.get('*', (request, response) => {
+    try {
+        response.sendFile(path.join(__dirname+'/client/build/index.html'));
+    } catch (error) {console.error("No path", error)}
 })
 
 app.listen(port, () => {

@@ -11,6 +11,7 @@ async function createTables () {
 async function createUser (email, password) {
     try {
         await pool.query(`INSERT INTO users(email, password) VALUES ('${email}', '${password}');`)
+        log(`created new user ${email}, ${password}`)
     } catch (error) {log('Error creating user in database', error) }
 }
 
