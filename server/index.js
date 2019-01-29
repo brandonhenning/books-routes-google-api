@@ -12,7 +12,6 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-
 db.createTables()
 
 async function checkUser (email, password) {
@@ -21,6 +20,7 @@ async function checkUser (email, password) {
 }
 
 app.get('/:email/:password', async (request, response) => {
+    console.log(request.params.email, request.params.password);
     try {
         const user = await checkUser(request.params.email, request.params.password)
         if (user) {
@@ -33,62 +33,62 @@ app.get('/:email/:password', async (request, response) => {
     } catch (error) {log('Error validating or creating user', error)}
 })
 
-// Route for user to edit their email
-app.get('/edit-email/:email/:password/:newEmail', async (request, response) => {
-    try {
-        const user = await checkUser(request.params.email, request.params.password)
-        if(user) {
-            await db.updateEmail(request.params.email, request.params.password, request.params.newEmail)
-        }
+// // Route for user to edit their email
+// app.get('/edit-email/:email/:password/:newEmail', async (request, response) => {
+//     try {
+//         const user = await checkUser(request.params.email, request.params.password)
+//         if(user) {
+//             await db.updateEmail(request.params.email, request.params.password, request.params.newEmail)
+//         }
 
-        return response.redirect(`/user-status/${request.params.newEmail}/${request.params.password}`)
-    } catch (error) {log('Error updating user email', error)}
-});
+//         return response.redirect(`/user-status/${request.params.newEmail}/${request.params.password}`)
+//     } catch (error) {log('Error updating user email', error)}
+// });
 
-// Route for user to edit their password
-app.get('/edit-password/:email/:password/:newPassword', async (request, response) => {
-    try {
-        const user = await checkUser(request.params.email, request.params.password)
-        if(user) {
-            await db.updatePassword(request.params.email, request.params.password, request.params.newPassword)
-        }
+// // Route for user to edit their password
+// app.get('/edit-password/:email/:password/:newPassword', async (request, response) => {
+//     try {
+//         const user = await checkUser(request.params.email, request.params.password)
+//         if(user) {
+//             await db.updatePassword(request.params.email, request.params.password, request.params.newPassword)
+//         }
 
-        response.redirect(`/user-status/${request.params.email}/${request.params.newPassword}`)
-    } catch (error) {log('Error updating user password', error)}
-});
+//         response.redirect(`/user-status/${request.params.email}/${request.params.newPassword}`)
+//     } catch (error) {log('Error updating user password', error)}
+// });
 
-// Route for user to delete their account
-app.get('/delete-user/:email/:password', async (request, response) => {
-    try {
-        const user = await checkUser(request.params.email, request.params.password)
-        if (user) {
-            await db.deleteUser(request.params.email, request.params.password)
-        }
+// // Route for user to delete their account
+// app.get('/delete-user/:email/:password', async (request, response) => {
+//     try {
+//         const user = await checkUser(request.params.email, request.params.password)
+//         if (user) {
+//             await db.deleteUser(request.params.email, request.params.password)
+//         }
 
-        response.redirect(`/user-status/${request.params.email}/${request.params.password}`)
-    } catch(error) {log('Error deleting user account', error)}
-})
+//         response.redirect(`/user-status/${request.params.email}/${request.params.password}`)
+//     } catch(error) {log('Error deleting user account', error)}
+// })
 
-// Route for user to check their collection id, return none if they don't have one, also only return id number if their username and password match 
-app.get('/cid/:email/:password', async (request, response) => {
-    try {
-        const user = await checkUser(request.params.email, request.params.password)
-        if (user) {
-            // 
-        }
-    } catch(error) {log('Error checking user collection id', error)}
-})
+// // Route for user to check their collection id, return none if they don't have one, also only return id number if their username and password match 
+// app.get('/cid/:email/:password', async (request, response) => {
+//     try {
+//         const user = await checkUser(request.params.email, request.params.password)
+//         if (user) {
+//             // 
+//         }
+//     } catch(error) {log('Error checking user collection id', error)}
+// })
 
-app.get('/user-status/:email/:password', async (request, response) => {
-    const user = await checkUser(request.params.email, request.params.password)
-    return response.json({ user })
-})
+// app.get('/user-status/:email/:password', async (request, response) => {
+//     const user = await checkUser(request.params.email, request.params.password)
+//     return response.json({ user })
+// })
 
-app.get('*', (request, response) => {
-    try {
-        response.sendFile(path.join(__dirname+'/client/build/index.html'));
-    } catch (error) {console.error("No path", error)}
-})
+// app.get('*', (request, response) => {
+//     try {
+//         response.sendFile(path.join(__dirname+'/client/build/index.html'));
+//     } catch (error) {console.error("No path", error)}
+// })
 
 app.listen(port, () => {
     console.log(`Listening on ${port}`)

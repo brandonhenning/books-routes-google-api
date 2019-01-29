@@ -5,14 +5,12 @@ class App extends Component {
   state = { newUser: null };
 
   sendLoginRequest = (email, password) => {
-    fetch(`/${email}/${password}`)
-    .then(result => {
-      console.log(result)
-    })
-    .then(result => {
-      console.log(result)
-    })
-  }
+    fetch(`http://localhost:5000/${email}/${password}`)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+      });
+  };
 
   render() {
     return (
