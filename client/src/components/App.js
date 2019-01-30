@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { BrowserRouter, Route } from 'react-router-dom';
 import Login from "./Login";
+import Header from "./Header";
+import SearchBar from './SearchBar';
 
 class App extends Component {
   state = { newUser: null };
@@ -15,18 +18,17 @@ class App extends Component {
   render() {
     return (
       <div className="ui container">
-        <div className="ui centered grid">
-          <div
-            style={{
-              maxWidth: "50%",
-              backgroundColor: "#f2d2e4",
-              marginTop: "50px"
-            }}
-            className="column"
-          >
-            <Login sendLoginRequest={this.sendLoginRequest} />
+        <BrowserRouter>
+          <div>
+            <Header />
+
+            <Route path="/" exact render={() => <h3>this is the home page :)</h3>} />
+            <Route path="/search" exact component={SearchBar} />
+            <Route path="/login" exact render={() => {
+              return <Login sendLoginRequest={this.sendLoginRequest} />
+            }} />
           </div>
-        </div>
+        </BrowserRouter>
       </div>
     );
   }

@@ -45,10 +45,10 @@ class Login extends Component {
               />
             </div>
           </div>
-          <button className="ui large violet button" type="submit">
+          <button className="ui large secondary  button" type="submit">
             login
           </button>
-          <button className="ui large violet button" type="submit">
+          <button className="ui large secondary button" type="submit">
             sign up
           </button>
         </form>
