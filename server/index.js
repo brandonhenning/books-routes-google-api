@@ -63,7 +63,8 @@ app.patch('/edit-password/:email/:password/:newPassword', async (request, respon
     } return response.json( {msg: 'Error updating password'} )
 })
 
-
+// db.addBook('This is a Test', 'Prescott Henning', 2020, 430, 'none', 1)
+db.getBooksFromCollection(1)
 
 // // Route for user to check their collection id, return none if they don't have one, also only return id number if their username and password match 
 // app.get('/cid/:email/:password', async (request, response) => {
